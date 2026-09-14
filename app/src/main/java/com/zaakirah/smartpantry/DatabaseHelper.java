@@ -12,15 +12,19 @@ import java.util.List;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "smart_pantry.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     private static final String TABLE_PANTRY = "pantry_items";
+    private static final String TABLE_RECIPES = "recipes";
 
     private static final String COLUMN_ID = "id";
     private static final String COLUMN_NAME = "name";
     private static final String COLUMN_QUANTITY = "quantity";
     private static final String COLUMN_UNIT = "unit";
     private static final String COLUMN_EXPIRY = "expiry_date";
+    private static final String COLUMN_RECIPE_NAME = "name";
+    private static final String COLUMN_RECIPE_INGREDIENTS = "ingredients";
+    private static final String COLUMN_RECIPE_STEPS = "preparation_steps";
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -37,12 +41,27 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 COLUMN_EXPIRY + " TEXT)";
 
         db.execSQL(createPantryTable);
+        String createRecipeTable = "CREATE TABLE " + TABLE_RECIPES + " (" +
+                COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                COLUMN_RECIPE_NAME + " TEXT NOT NULL, " +
+                COLUMN_RECIPE_INGREDIENTS + " TEXT NOT NULL, " +
+                COLUMN_RECIPE_STEPS + " TEXT NOT NULL)";
+
+        db.execSQL(createRecipeTable);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_PANTRY);
-        onCreate(db);
+
+        if (oldVersion < 2) {
+            String createRecipeTable = "CREATE TABLE IF NOT EXISTS " + TABLE_RECIPES + " (" +
+                    COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    COLUMN_RECIPE_NAME + " TEXT NOT NULL, " +
+                    COLUMN_RECIPE_INGREDIENTS + " TEXT NOT NULL, " +
+                    COLUMN_RECIPE_STEPS + " TEXT NOT NULL)";
+
+            db.execSQL(createRecipeTable);
+        }
     }
 
     public long addPantryItem(PantryItem item) {
@@ -130,5 +149,66 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
 
         return rowsDeleted;
+    }
+
+    public long addRecipe(Recipe recipe) {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_RECIPE_NAME, recipe.getName());
+        values.put(COLUMN_RECIPE_INGREDIENTS, recipe.getIngredients());
+        values.put(COLUMN_RECIPE_STEPS, recipe.getPreparationSteps());
+
+        long id = db.insert(TABLE_RECIPES, null, values);
+
+        db.close();
+
+        return id;
+    }
+
+    public List<Recipe> getAllRecipes() {
+
+        List<Recipe> recipes = new ArrayList<>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.query(
+                TABLE_RECIPES,
+                null,
+                null,
+                null,
+                null,
+                null,
+                COLUMN_RECIPE_NAME + " ASC"
+        );
+
+        while (cursor.moveToNext()) {
+
+            int id = cursor.getInt(
+                    cursor.getColumnIndexOrThrow(COLUMN_ID)
+            );
+
+            String name = cursor.getString(
+                    cursor.getColumnIndexOrThrow(COLUMN_RECIPE_NAME)
+            );
+
+            String ingredients = cursor.getString(
+                    cursor.getColumnIndexOrThrow(COLUMN_RECIPE_INGREDIENTS)
+            );
+
+            String steps = cursor.getString(
+                    cursor.getColumnIndexOrThrow(COLUMN_RECIPE_STEPS)
+            );
+
+            recipes.add(
+                    new Recipe(id, name, ingredients, steps)
+            );
+        }
+
+        cursor.close();
+        db.close();
+
+        return recipes;
     }
 }

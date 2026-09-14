@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         databaseHelper = new DatabaseHelper(this);
+        RecipeSeeder.seedRecipes(this);
 
         RecyclerView recyclerPantry = findViewById(R.id.recyclerPantry);
         Button btnAddIngredient = findViewById(R.id.btnAddIngredient);
