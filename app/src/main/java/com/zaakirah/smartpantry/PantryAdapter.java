@@ -2,6 +2,7 @@ package com.zaakirah.smartpantry;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public class PantryAdapter extends RecyclerView.Adapter<PantryAdapter.PantryViewHolder> {
 
@@ -48,6 +53,36 @@ public class PantryAdapter extends RecyclerView.Adapter<PantryAdapter.PantryView
         }
 
         holder.tvIngredientDetails.setText(details);
+
+        SharedPreferences preferences =
+                holder.itemView.getContext().getSharedPreferences(
+                        "smart_pantry_settings",
+                        Context.MODE_PRIVATE
+                );
+
+        boolean expiryAlertsEnabled =
+                preferences.getBoolean(
+                        "expiry_alerts",
+                        true
+                );
+
+        if (expiryAlertsEnabled
+                && isExpiringSoon(item.getExpiryDate())) {
+
+            holder.tvExpiryWarning.setText(
+                    "Expires soon"
+            );
+
+            holder.tvExpiryWarning.setVisibility(
+                    View.VISIBLE
+            );
+
+        } else {
+
+            holder.tvExpiryWarning.setVisibility(
+                    View.GONE
+            );
+        }
 
         holder.btnEdit.setOnClickListener(v -> {
 
@@ -91,10 +126,44 @@ public class PantryAdapter extends RecyclerView.Adapter<PantryAdapter.PantryView
         notifyDataSetChanged();
     }
 
+    private boolean isExpiringSoon(String expiryDate) {
+
+        if (expiryDate == null || expiryDate.isEmpty()) {
+            return false;
+        }
+
+        try {
+
+            SimpleDateFormat dateFormat =
+                    new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+
+            dateFormat.setLenient(false);
+
+            Date expiry = dateFormat.parse(expiryDate);
+
+            if (expiry == null) {
+                return false;
+            }
+
+            long currentTime = System.currentTimeMillis();
+
+            long threeDaysFromNow =
+                    currentTime + (3L * 24 * 60 * 60 * 1000);
+
+            return expiry.getTime() >= currentTime
+                    && expiry.getTime() <= threeDaysFromNow;
+
+        } catch (ParseException e) {
+
+            return false;
+        }
+    }
+
     public static class PantryViewHolder extends RecyclerView.ViewHolder {
 
         TextView tvIngredientName;
         TextView tvIngredientDetails;
+        TextView tvExpiryWarning;
         Button btnEdit;
         Button btnDelete;
 
@@ -103,6 +172,7 @@ public class PantryAdapter extends RecyclerView.Adapter<PantryAdapter.PantryView
 
             tvIngredientName = itemView.findViewById(R.id.tvIngredientName);
             tvIngredientDetails = itemView.findViewById(R.id.tvIngredientDetails);
+            tvExpiryWarning = itemView.findViewById(R.id.tvExpiryWarning);
             btnEdit = itemView.findViewById(R.id.btnEdit);
             btnDelete = itemView.findViewById(R.id.btnDelete);
         }
