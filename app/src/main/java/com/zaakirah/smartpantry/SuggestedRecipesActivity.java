@@ -1,24 +1,91 @@
 package com.zaakirah.smartpantry;
 
 import android.os.Bundle;
+import android.widget.TextView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class SuggestedRecipesActivity extends AppCompatActivity {
+
+    private DatabaseHelper databaseHelper;
+    private RecipeAdapter recipeAdapter;
+    private TextView tvNoMatches;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_suggested_recipes);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+
+        databaseHelper = new DatabaseHelper(this);
+
+        RecyclerView recyclerRecipes =
+                findViewById(R.id.recyclerRecipes);
+
+        tvNoMatches =
+                findViewById(R.id.tvNoMatches);
+
+        recipeAdapter =
+                new RecipeAdapter(new ArrayList<>());
+
+        recyclerRecipes.setLayoutManager(
+                new LinearLayoutManager(this)
+        );
+
+        recyclerRecipes.setAdapter(recipeAdapter);
+
+        loadSuggestedRecipes();
+    }
+
+    private void loadSuggestedRecipes() {
+
+        List<Recipe> allRecipes =
+                databaseHelper.getAllRecipes();
+
+        List<PantryItem> pantryItems =
+                databaseHelper.getAllPantryItems();
+
+        List<Recipe> matchingRecipes =
+                new ArrayList<>();
+
+        for (Recipe recipe : allRecipes) {
+
+            if (RecipeMatcher.matches(
+                    recipe,
+                    pantryItems)) {
+
+                matchingRecipes.add(recipe);
+            }
+        }
+
+        recipeAdapter.updateRecipes(matchingRecipes);
+
+        if (matchingRecipes.isEmpty()) {
+
+            tvNoMatches.setVisibility(
+                    TextView.VISIBLE
+            );
+
+        } else {
+
+            tvNoMatches.setVisibility(
+                    TextView.GONE
+            );
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (databaseHelper != null
+                && recipeAdapter != null) {
+
+            loadSuggestedRecipes();
+        }
     }
 }

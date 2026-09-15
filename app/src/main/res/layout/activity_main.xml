@@ -20,6 +20,13 @@
         android:layout_height="wrap_content"
         android:text="+ Add Ingredient" />
 
+    <Button
+        android:id="@+id/btnSuggestedRecipes"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Suggested Recipes" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerPantry"
         android:layout_width="match_parent"

@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
         RecyclerView recyclerPantry = findViewById(R.id.recyclerPantry);
         Button btnAddIngredient = findViewById(R.id.btnAddIngredient);
+        Button btnSuggestedRecipes = findViewById(R.id.btnSuggestedRecipes);
 
         pantryItems = new ArrayList<>();
 
@@ -37,6 +38,11 @@ public class MainActivity extends AppCompatActivity {
 
         btnAddIngredient.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, AddEditIngredientActivity.class);
+            startActivity(intent);
+        });
+
+        btnSuggestedRecipes.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, SuggestedRecipesActivity.class);
             startActivity(intent);
         });
     }
