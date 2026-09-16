@@ -32,13 +32,11 @@
             android:hint="Quantity"
             android:inputType="numberDecimal" />
 
-        <EditText
-            android:id="@+id/etUnit"
+        <Spinner
+            android:id="@+id/spinnerUnit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:hint="Unit (e.g. kg, g, pieces)"
-            android:inputType="text" />
+            android:layout_marginTop="8dp" />
 
         <EditText
             android:id="@+id/etExpiryDate"

@@ -2,8 +2,10 @@ package com.zaakirah.smartpantry;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,7 +14,7 @@ public class AddEditIngredientActivity extends AppCompatActivity {
 
     private EditText etIngredientName;
     private EditText etQuantity;
-    private EditText etUnit;
+    private Spinner spinnerUnit;
     private EditText etExpiryDate;
 
     private DatabaseHelper databaseHelper;
@@ -25,8 +27,32 @@ public class AddEditIngredientActivity extends AppCompatActivity {
 
         etIngredientName = findViewById(R.id.etIngredientName);
         etQuantity = findViewById(R.id.etQuantity);
-        etUnit = findViewById(R.id.etUnit);
+        spinnerUnit = findViewById(R.id.spinnerUnit);
         etExpiryDate = findViewById(R.id.etExpiryDate);
+
+        String[] units = {
+                "Pieces",
+                "Grams",
+                "Kilograms",
+                "Millilitres",
+                "Litres"
+        };
+
+        ArrayAdapter<String> unitAdapter =
+                new ArrayAdapter<>(
+                        this,
+                        android.R.layout.simple_spinner_item,
+                        units
+                );
+
+        unitAdapter.setDropDownViewResource(
+                android.R.layout.simple_spinner_dropdown_item
+        );
+
+        spinnerUnit.setAdapter(unitAdapter);
+
+        etExpiryDate.setFocusable(false);
+        etExpiryDate.setOnClickListener(v -> showDatePicker());
 
         Button btnSaveIngredient = findViewById(R.id.btnSaveIngredient);
 
@@ -46,9 +72,16 @@ public class AddEditIngredientActivity extends AppCompatActivity {
                     )
             );
 
-            etUnit.setText(
-                    getIntent().getStringExtra("unit")
-            );
+            String savedUnit =
+                    getIntent().getStringExtra("unit");
+
+            for (int i = 0; i < units.length; i++) {
+
+                if (units[i].equalsIgnoreCase(savedUnit)) {
+                    spinnerUnit.setSelection(i);
+                    break;
+                }
+            }
 
             etExpiryDate.setText(
                     getIntent().getStringExtra("expiryDate")
@@ -64,7 +97,8 @@ public class AddEditIngredientActivity extends AppCompatActivity {
 
         String name = etIngredientName.getText().toString().trim();
         String quantityText = etQuantity.getText().toString().trim();
-        String unit = etUnit.getText().toString().trim();
+        String unit =
+                spinnerUnit.getSelectedItem().toString();
         String expiryDate = etExpiryDate.getText().toString().trim();
 
         if (TextUtils.isEmpty(name)) {
@@ -76,12 +110,6 @@ public class AddEditIngredientActivity extends AppCompatActivity {
         if (TextUtils.isEmpty(quantityText)) {
             etQuantity.setError("Enter a quantity");
             etQuantity.requestFocus();
-            return;
-        }
-
-        if (TextUtils.isEmpty(unit)) {
-            etUnit.setError("Enter a unit");
-            etUnit.requestFocus();
             return;
         }
 
@@ -140,5 +168,39 @@ public class AddEditIngredientActivity extends AppCompatActivity {
         }
 
         finish();
+    }
+    private void showDatePicker() {
+
+        java.util.Calendar calendar =
+                java.util.Calendar.getInstance();
+
+        android.app.DatePickerDialog datePickerDialog =
+                new android.app.DatePickerDialog(
+                        this,
+                        (view, year, month, dayOfMonth) -> {
+
+                            String selectedDate =
+                                    String.format(
+                                            java.util.Locale.getDefault(),
+                                            "%02d/%02d/%04d",
+                                            dayOfMonth,
+                                            month + 1,
+                                            year
+                                    );
+
+                            etExpiryDate.setText(selectedDate);
+                        },
+                        calendar.get(
+                                java.util.Calendar.YEAR
+                        ),
+                        calendar.get(
+                                java.util.Calendar.MONTH
+                        ),
+                        calendar.get(
+                                java.util.Calendar.DAY_OF_MONTH
+                        )
+                );
+
+        datePickerDialog.show();
     }
 }
