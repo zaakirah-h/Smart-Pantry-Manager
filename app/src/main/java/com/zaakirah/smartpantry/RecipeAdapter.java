@@ -43,7 +43,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         holder.tvRecipeName.setText(recipe.getName());
 
         holder.tvRecipeIngredients.setText(
-                "Required ingredients: " + recipe.getIngredients()
+                formatIngredients(recipe.getIngredients())
         );
 
         holder.btnViewRecipe.setOnClickListener(v -> {
@@ -62,6 +62,48 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
 
             context.startActivity(intent);
         });
+    }
+
+    private String formatIngredients(String ingredients) {
+
+        if (ingredients == null || ingredients.isEmpty()) {
+            return "";
+        }
+
+        String[] ingredientList =
+                ingredients.split("\\|");
+
+        StringBuilder formatted =
+                new StringBuilder("Required ingredients:\n");
+
+        for (String ingredient : ingredientList) {
+
+            String[] parts =
+                    ingredient.split(":");
+
+            if (parts.length == 3) {
+
+                String name = parts[0];
+                String quantity = parts[1];
+                String unit = parts[2];
+
+                formatted.append("• ")
+                        .append(name)
+                        .append(" - ")
+                        .append(quantity)
+                        .append(" ")
+                        .append(unit)
+                        .append("\n");
+
+            } else {
+
+                formatted.append("• ")
+                        .append(ingredient)
+                        .append("\n");
+            }
+        }
+
+        return formatted.toString().trim();
     }
 
     @Override
