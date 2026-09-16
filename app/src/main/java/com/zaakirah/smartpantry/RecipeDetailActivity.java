@@ -2,6 +2,7 @@ package com.zaakirah.smartpantry;
 
 import android.os.Bundle;
 import android.widget.TextView;
+import androidx.appcompat.widget.Toolbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -11,6 +12,14 @@ public class RecipeDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_detail);
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        if (getSupportActionBar() != null) {
+            getSupportActionBar().setTitle("Recipe Details");
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        }
 
         TextView tvRecipeDetailName =
                 findViewById(R.id.tvRecipeDetailName);
@@ -76,5 +85,11 @@ public class RecipeDetailActivity extends AppCompatActivity {
         }
 
         return formatted.toString().trim();
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        finish();
+        return true;
     }
 }

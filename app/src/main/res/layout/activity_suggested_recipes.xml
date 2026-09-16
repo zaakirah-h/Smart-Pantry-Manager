@@ -4,23 +4,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:fitsSystemWindows="true"
     android:padding="16dp">
 
-    <TextView
-        android:id="@+id/tvSuggestedTitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Suggested Recipes"
-        android:textSize="28sp"
-        android:textStyle="bold"
-        android:paddingBottom="8dp" />
+    <include
+        layout="@layout/toolbar" />
 
     <TextView
         android:id="@+id/tvNoMatches"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="No recipes match your current pantry."
+        android:text="No recipes match your current pantry. Try adding more ingredients or increasing the available quantity."
         android:textSize="16sp"
+        android:gravity="center"
         android:padding="12dp"
         android:visibility="gone" />
 
