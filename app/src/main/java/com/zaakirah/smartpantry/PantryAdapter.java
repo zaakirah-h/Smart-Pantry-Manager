@@ -73,6 +73,10 @@ public class PantryAdapter extends RecyclerView.Adapter<PantryAdapter.PantryView
                     "Expires soon"
             );
 
+            holder.tvExpiryWarning.setTextColor(
+                    android.graphics.Color.RED
+            );
+
             holder.tvExpiryWarning.setVisibility(
                     View.VISIBLE
             );
