@@ -3,6 +3,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginBottom="12dp"
+    android:background="@drawable/bg_recipe_card"
     android:orientation="vertical"
     android:padding="16dp">
 
@@ -10,21 +12,29 @@
         android:id="@+id/tvRecipeName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20sp"
+        android:fontFamily="sans-serif-medium"
+        android:textColor="#315C4A"
+        android:textSize="21sp"
         android:textStyle="bold" />
 
     <TextView
         android:id="@+id/tvRecipeIngredients"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
-        android:textSize="15sp" />
+        android:layout_marginTop="8dp"
+        android:fontFamily="sans-serif"
+        android:textColor="#5F6F64"
+        android:textSize="15sp"
+        android:lineSpacingExtra="3dp" />
 
     <Button
         android:id="@+id/btnViewRecipe"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="View Recipe" />
+        android:layout_marginTop="14dp"
+        android:backgroundTint="#315C4A"
+        android:text="View Recipe"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp" />
 
 </LinearLayout>

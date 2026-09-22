@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_marginBottom="12dp"
+    android:background="@drawable/bg_pantry_card"
     android:orientation="vertical"
     android:padding="16dp">
 
@@ -9,6 +12,8 @@
         android:id="@+id/tvIngredientName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-medium"
+        android:textColor="#315C4A"
         android:textSize="20sp"
         android:textStyle="bold" />
 
@@ -16,14 +21,17 @@
         android:id="@+id/tvIngredientDetails"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:textSize="16sp" />
+        android:layout_marginTop="6dp"
+        android:fontFamily="sans-serif"
+        android:textColor="#5F6F64"
+        android:textSize="15sp" />
 
     <TextView
         android:id="@+id/tvExpiryWarning"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="6dp"
+        android:fontFamily="sans-serif-medium"
         android:textSize="14sp"
         android:textStyle="bold"
         android:visibility="gone" />
@@ -31,7 +39,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="12dp"
         android:orientation="horizontal">
 
         <Button
@@ -39,15 +47,21 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Edit" />
+            android:backgroundTint="#7A9B76"
+            android:text="Edit"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp" />
 
         <Button
             android:id="@+id/btnDelete"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="10dp"
             android:layout_weight="1"
-            android:text="Delete" />
+            android:backgroundTint="#315C4A"
+            android:text="Delete"
+            android:textColor="#FFFFFF"
+            android:textSize="14sp" />
 
     </LinearLayout>
 

@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    android:background="#F5F1E8">
 
     <include
         layout="@layout/toolbar" />
@@ -18,30 +19,35 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="20dp">
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Preferences"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-medium"
+                android:textColor="#315C4A" />
 
             <Switch
                 android:id="@+id/switchExpiryAlerts"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:layout_marginTop="12dp"
-                android:text="Show expiring-soon alerts" />
+                android:layout_marginTop="16dp"
+                android:text="Show expiring-soon alerts"
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/tvUnitPreference"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="28dp"
                 android:text="Preferred measurement unit"
-                android:textSize="18sp"
-                android:textStyle="bold" />
+                android:textSize="19sp"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-medium"
+                android:textColor="#315C4A" />
 
             <Spinner
                 android:id="@+id/spinnerUnit"
@@ -52,17 +58,21 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="36dp"
                 android:text="About Smart Pantry Manager"
-                android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-medium"
+                android:textColor="#315C4A" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="10dp"
                 android:text="Smart Pantry Manager helps users keep track of pantry ingredients and find recipes based on the ingredients they currently have."
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                android:textColor="#4F5F55"
+                android:lineSpacingExtra="4dp" />
 
         </LinearLayout>
 

@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:fitsSystemWindows="true"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="#F5F1E8">
 
     <include
         layout="@layout/toolbar" />
@@ -16,8 +17,11 @@
         android:layout_height="wrap_content"
         android:text="No recipes match your current pantry. Try adding more ingredients or increasing the available quantity."
         android:textSize="16sp"
+        android:textColor="#5F6F64"
+        android:fontFamily="sans-serif"
         android:gravity="center"
-        android:padding="12dp"
+        android:padding="20dp"
+        android:layout_marginTop="8dp"
         android:visibility="gone" />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -25,6 +29,6 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:layout_marginTop="8dp" />
+        android:layout_marginTop="12dp" />
 
 </LinearLayout>

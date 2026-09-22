@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:fitsSystemWindows="true">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    android:background="#F5F1E8">
 
     <include
         layout="@layout/toolbar" />
@@ -18,43 +19,65 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="20dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Ingredient Details"
+                android:textColor="#315C4A"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-medium"
+                android:layout_marginBottom="16dp" />
 
             <EditText
                 android:id="@+id/etIngredientName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Ingredient name"
-                android:inputType="textCapWords" />
+                android:inputType="textCapWords"
+                android:textSize="16sp"
+                android:padding="12dp"
+                android:backgroundTint="#7A9B76" />
 
             <EditText
                 android:id="@+id/etQuantity"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="16dp"
                 android:hint="Quantity"
-                android:inputType="numberDecimal" />
+                android:inputType="numberDecimal"
+                android:textSize="16sp"
+                android:padding="12dp"
+                android:backgroundTint="#7A9B76" />
 
             <Spinner
                 android:id="@+id/spinnerUnit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp" />
+                android:layout_marginTop="12dp" />
 
             <EditText
                 android:id="@+id/etExpiryDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="16dp"
                 android:hint="Expiry date (optional)"
-                android:inputType="date" />
+                android:inputType="date"
+                android:textSize="16sp"
+                android:padding="12dp"
+                android:backgroundTint="#7A9B76" />
 
             <Button
                 android:id="@+id/btnSaveIngredient"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:text="Save Ingredient" />
+                android:layout_marginTop="28dp"
+                android:text="Save Ingredient"
+                android:textColor="#FFFFFF"
+                android:textSize="15sp"
+                android:backgroundTint="#315C4A" />
 
         </LinearLayout>
 

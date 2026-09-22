@@ -5,6 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:fitsSystemWindows="true">
+    android:background="#F5F1E8"
 
     <include
         layout="@layout/toolbar" />
@@ -21,15 +22,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="My Pantry"
-            android:textSize="28sp"
+            android:textSize="26sp"
             android:textStyle="bold"
-            android:paddingBottom="12dp" />
+            android:textColor="#315C4A"
+            android:paddingBottom="12dp"/>
 
         <Button
             android:id="@+id/btnAddIngredient"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="+ Add Ingredient" />
+            android:text="+ Add Ingredient"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#315C4A" />
 
         <TextView
             android:id="@+id/tvEmptyPantry"
@@ -39,7 +43,8 @@
             android:gravity="center"
             android:text="Your pantry is empty. Add some ingredients to get started."
             android:textSize="16sp"
-            android:visibility="gone" />
+            android:visibility="gone"
+            android:textColor="#5F6F64"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerPantry"
